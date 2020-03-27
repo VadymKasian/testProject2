@@ -1,10 +1,8 @@
 package net.test;
 
 import com.test.base.BaseTest;
-import com.test.pages.BookInformationPage;
-import com.test.pages.FilteredSearchResultPage;
-import com.test.pages.MainPage;
-import com.test.pages.SearchResultPage;
+import com.test.entities.Book;
+import com.test.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,53 +12,44 @@ import java.util.List;
 public class BookContainsTest extends BaseTest {
 
     /*
-    @  0 - bestseller ("true" \ "false")
     @  1 - name
     @  2 - author
     */
-    List<String> bookInformation = new ArrayList<String>();
-
-    List<List<String>> library = new ArrayList<List<String>>();
+    List<Book> library = new ArrayList<Book>();
+    Book book;
 
     @Test
     public void testAddBooksInCollection() throws InterruptedException {
-        MainPage.getInstance().searchQuery("Java");
+        Pages.mainPage().searchQuery("Java");
+        Pages.mainPage().aceptSearch();
 
-        SearchResultPage.getInstance().clickBooksFilter();
+        Pages.searchResultPage().clickBooksFilter();
 
         Thread.sleep(500);
-        FilteredSearchResultPage.getInstance().getSearchResult().forEach(element -> {
-            bookInformation = new ArrayList<String>();
+        Pages.filteredSearchResultPage().getSearchResult().forEach(element -> {
+            book = new Book();
 
-            // check bestseller
-            bookInformation.add(String.valueOf(FilteredSearchResultPage.getInstance().isBestseller(element)));
-
-            // name
-            bookInformation.add(FilteredSearchResultPage.getInstance().getBookName(element));
+            // title
+            book.setTitle(Pages.filteredSearchResultPage().getBookTitle(element));
 
             // author(s)
-            bookInformation.add(FilteredSearchResultPage.getInstance().getBookAuthor(element));
+            book.setAuthor(Pages.filteredSearchResultPage().getBookAuthor(element));
 
-            library.add(bookInformation);
+            library.add(book);
         });
-
-        System.out.println("Book list");
-        for (List<String> book: library){
-            System.out.println(book.toString());
-        }
 
         driver.get("https://www.amazon.com/Head-First-Java-Kathy-Sierra/dp/0596009208/ref=sr_1_3");
 
-        String name = BookInformationPage.getInstance().getBookName();
+        book = new Book();
+        book.setTitle(Pages.bookInformationPage().getBookName());
+        book.setAuthor(Pages.bookInformationPage().getBookAuthor());
         boolean contains = false;
 
         //check book from URL contains in collection
-        for (List<String> list: library) {
-            if(name.equals(list.get(1))){
+        for (Book libraryBook : library) {
+            if(book.equals(libraryBook)){
                 contains = true;
-                break;
             }
-
         }
         Assert.assertTrue(contains);
     }

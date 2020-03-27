@@ -6,37 +6,21 @@ import com.test.locators.Locator;
 import com.test.locators.XPath;
 
 public class BookInformationPage extends BasePage {
-    private static BookInformationPage bookInformationPage;
 
     private Locator bookAuthor = new XPath("//span[@class='author notFaded']");
-
     private Locator bookName = new ClassName("a-size-extra-large");
 
-    private boolean bestSeller = false;
-
-    public static BookInformationPage getInstance(){
-        if (bookInformationPage == null){
-            return new BookInformationPage();
-        }
-        return bookInformationPage;
-    }
-
-    private BookInformationPage(){
-        if(getElementsCount(new ClassName("badge-wrapper")) > 0){
-            bestSeller = true;
-        }
-    }
-
     public String getBookAuthor() {
-        return getElement(bookAuthor).getText();
+        String author = getElement(bookAuthor).getText();
+        if (author.contains(" (Author)")) {
+            author = author.substring(0, author.indexOf(" (Author)"));
+        }
+        return author;//.substring(3, author.length());
     }
 
     public String getBookName() {
         return getElement(bookName).getText();
     }
 
-    public boolean isBestSeller() {
-        return bestSeller;
-    }
 
 }
