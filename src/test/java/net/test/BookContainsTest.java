@@ -11,10 +11,6 @@ import java.util.List;
 
 public class BookContainsTest extends BaseTest {
 
-    /*
-    @  1 - name
-    @  2 - author
-    */
     List<Book> library = new ArrayList<Book>();
     Book book;
 
@@ -37,8 +33,9 @@ public class BookContainsTest extends BaseTest {
 
             library.add(book);
         });
+//
 
-        driver.get("https://www.amazon.com/Head-First-Java-Kathy-Sierra/dp/0596009208/ref=sr_1_3");
+        driver.get("https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997/ref=sr_1_1?dchild=1&keywords=java&qid=1585562100&rnid=2941120011&s=books&sr=1-1");
 
         book = new Book();
         book.setTitle(Pages.bookInformationPage().getBookName());
