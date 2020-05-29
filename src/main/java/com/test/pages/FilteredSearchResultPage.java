@@ -25,7 +25,7 @@ public class FilteredSearchResultPage extends BasePage {
     public String getBookAuthor(WebElement element) {
         String author = getElementText("Getting bookAuthor value", element, bookAuthor);
         if (author.contains(" | ")) {
-            author = author.substring(0, author.indexOf(" | ") - 1);
+            author = author.substring(0, author.indexOf(" | "));
         }
         return author.substring(3, author.length());
     }

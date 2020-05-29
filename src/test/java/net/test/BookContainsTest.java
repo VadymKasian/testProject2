@@ -35,7 +35,7 @@ public class BookContainsTest extends BaseTest {
         });
 //
 
-        driver.get("https://www.amazon.com/Effective-Java-Joshua-Bloch/dp/0134685997/ref=sr_1_1?dchild=1&keywords=java&qid=1585562100&rnid=2941120011&s=books&sr=1-1");
+        driver.get("https://www.amazon.com/Joshua-Bloch/dp/0134685997/ref=sr_1_1?dchild=1&keywords=java&qid=1590758002&rnid=2941120011&s=books&sr=1-1");
 
         book = new Book();
         book.setTitle(Pages.bookInformationPage().getBookName());
@@ -46,6 +46,7 @@ public class BookContainsTest extends BaseTest {
         for (Book libraryBook : library) {
             if(book.equals(libraryBook)){
                 contains = true;
+                break;
             }
         }
         Assert.assertTrue(contains);
