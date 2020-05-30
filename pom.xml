@@ -12,6 +12,7 @@
     <properties>
         <browser>chrome</browser>
         <baseurl>https://www.google.com.ua/</baseurl>
+        <hub>http://localhost:4444/wd/hub</hub>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <src.dir>${basedir}${file.separator}src${file.separator}main${file.separator}java</src.dir>
         <path.to.driver>${basedir}${file.separator}lib${file.separator}driver</path.to.driver>
