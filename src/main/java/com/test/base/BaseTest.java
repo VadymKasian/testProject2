@@ -47,9 +47,43 @@ public class BaseTest implements ITest {
     }
 
     protected void startFirefox() {
-        driver = new FirefoxDriver();
+        String platform = System.getProperty("os.name");
+
+        String driversFolder = Constants.DEFAULT_LIB_DIR + File.separator;
+        String pathToDriver = null;
+        if (System.getProperty("path.to.driver") != null && !System.getProperty("path.to.driver").isEmpty()) {
+            pathToDriver = System.getProperty("path.to.driver");
+        } else {
+            pathToDriver = driversFolder + "geckodriver.exe";
+        }
+
+        System.setProperty("webdriver.gecko.driver", pathToDriver);
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        driver = new FirefoxDriver(capabilities) {
+            @Override
+            public WebElement findElement(By by) {
+                try {
+                    return by.findElement(this);
+                } catch (NoSuchElementException nse) {
+                    Field f = null;
+                    try {
+                        f = Throwable.class.getDeclaredField("detailMessage");
+                    } catch (NoSuchFieldException e) {
+                        throw nse;
+                    }
+                    f.setAccessible(true);
+                    try {
+                        String error = "\n" + by.toString() + "\n" + f.get(nse);
+                        f.set(nse, error);
+                    } catch (IllegalAccessException ia) {
+                    }
+                    throw nse;
+                }
+            }
+        };
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Constants.ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        driver.get(Constants.MAIN_PAGE_URL);
     }
 
     protected void setupFirefoxRemoteDriver(String hubUrl, String platformName) throws IOException {
@@ -146,15 +180,15 @@ public class BaseTest implements ITest {
     }
 
 
-    @BeforeClass
-    public void startBrowser() throws IOException {
+    @BeforeClass(alwaysRun = true)
+    @Parameters({ "browser"})
+    public void startBrowser(@Optional("chrome") String browser) throws IOException {
 
         String message = "* Starting test " + this.getClass().toString();
         Reporter.log("\n" + message);
         System.out.println(message);
 
         String hubUrl = System.getProperty("hub");
-        String browser = Constants.DEFAULT_BROWSER;
         String platform = System.getProperty("sun.desktop"); //or  os.name
 
         if (browser.equalsIgnoreCase("chrome")) {

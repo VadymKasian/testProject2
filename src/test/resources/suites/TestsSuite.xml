@@ -1,11 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Linked in test" verbose="1">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-    <test name="Check main page">
-        <classes>
-            <class name="net.test.BookContainsTest"/>
-        </classes>
-    </test>
+<suite name="BookContainsTest" verbose="1" parallel="tests" thread-count="2">
+
+<!-- <parameter name="environment" value="local"></parameter> -->
+<parameter name="environment" value="grid"></parameter>
+
+<test name="BookContains-CH">
+    <parameter name="browser" value="chrome"></parameter>
+    <classes>
+        <class name="net.test.BookContainsTest" />
+    </classes>
+</test>
+
+<test name="BookContains-FF">
+    <parameter name="browser" value="firefox"></parameter>
+    <classes>
+        <class name="net.test.BookContainsTest" />
+    </classes>
+</test>
 
 </suite>
