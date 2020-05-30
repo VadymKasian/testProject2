@@ -33,13 +33,10 @@ public class BookContainsTest extends BaseTest {
 
             library.add(book);
         });
-//
-
-        driver.get("https://www.amazon.com/Joshua-Bloch/dp/0134685997/ref=sr_1_1?dchild=1&keywords=java&qid=1590758002&rnid=2941120011&s=books&sr=1-1");
 
         book = new Book();
-        book.setTitle(Pages.bookInformationPage().getBookName());
-        book.setAuthor(Pages.bookInformationPage().getBookAuthor());
+        book.setTitle("Effective Java");
+        book.setAuthor("Joshua Bloch");
         boolean contains = false;
 
         //check book from URL contains in collection

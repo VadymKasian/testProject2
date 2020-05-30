@@ -2,7 +2,6 @@ package com.test.pages;
 
 public class Pages {
     private static FilteredSearchResultPage filteredSearchResultPage;
-    private static BookInformationPage bookInformationPage;
     private static SearchResultPage searchResultPage;
     private static MainPage mainPage;
 
@@ -10,12 +9,6 @@ public class Pages {
         if (filteredSearchResultPage == null)
             return new FilteredSearchResultPage();
         return filteredSearchResultPage;
-    }
-
-    public static BookInformationPage bookInformationPage() {
-        if (bookInformationPage == null)
-            return new BookInformationPage();
-        return bookInformationPage;
     }
 
     public static SearchResultPage searchResultPage() {
