@@ -8,6 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITest;
 import org.testng.annotations.*;
 
@@ -162,14 +163,20 @@ public class BaseTest implements ITest {
 
 
     protected void setupChromeRemoteDriver(String hubUrl, String platformName) throws IOException {
-        //Platform platform = (platformName != null) ? Platform.valueOf(platformName) : Platform.ANY;
 
+        String platform = System.getProperty("os.name");
+
+        String driversFolder = Constants.DEFAULT_LIB_DIR + File.separator;
+        String pathToDriver = null;
+        if (System.getProperty("path.to.driver") != null && !System.getProperty("path.to.driver").isEmpty()) {
+            pathToDriver = System.getProperty("path.to.driver");
+        } else {
+            pathToDriver = "D:/java/programs/chromedriver.exe";
+        }
+
+        System.setProperty("webdriver.chrome.driver", pathToDriver);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setBrowserName("chrome");
-        //capabilities.setPlatform(platform);
-        capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, false);
-
-        driver = new CustomRemoteWebDriver(new URL(hubUrl), capabilities) {
+        driver = new ChromeDriver(capabilities) {
             @Override
             public WebElement findElement(By by) {
                 try {
@@ -191,8 +198,39 @@ public class BaseTest implements ITest {
                 }
             }
         };
+
+//        capabilities.setBrowserName("chrome");
+//        capabilities.setPlatform(Platform.WINDOWS);
+        capabilities.setVersion("83.0.4109.39");
+
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Constants.ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        driver.get(Constants.MAIN_PAGE_URL);
+
+
+
+//        //Platform platform = (platformName != null) ? Platform.valueOf(platformName) : Platform.ANY;
+//
+//        String driversFolder = Constants.DEFAULT_LIB_DIR + File.separator;
+//        String pathToDriver = null;
+//        if (System.getProperty("path.to.driver") != null && !System.getProperty("path.to.driver").isEmpty()) {
+//            pathToDriver = System.getProperty("path.to.driver");
+//        } else {
+//            pathToDriver = "D:/java/programs/chromedriver.exe";
+//        }
+//
+//        System.setProperty("webdriver.chrome.driver", pathToDriver);
+//
+//        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+////        capabilities.setVersion("83.0.4103.39");
+//        capabilities.setBrowserName("chrome");
+////        capabilities.setPlatform(Platform.WINDOWS);
+//        //capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, false);
+//
+//        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Constants.ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     }
 
     protected void closeBrowser() {

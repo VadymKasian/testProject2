@@ -3,7 +3,7 @@ package com.test.util;
 public class Constants {
     public static final String DEFAULT_BROWSER = System.getProperty("browser", "chrome");
 //    public static String DEFAULT_LIB_DIR = System.getProperty("lib.dir");
-    public static String DEFAULT_LIB_DIR = "lib\\driver";
+    public static String DEFAULT_LIB_DIR = "D:/java/programs/";
 
     public static final int ELEMENT_MEGA_EXTRALONG_TIMEOUT_SECONDS = 360;
     public static final int ELEMENT_EXTRALONG_TIMEOUT_SECONDS = 180;
