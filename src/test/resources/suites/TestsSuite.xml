@@ -12,4 +12,11 @@
         </classes>
     </test>
 
+    <test name="BookContains-FF">
+        <parameter name="browser" value="firefox"></parameter>
+        <classes>
+            <class name="net.test.BookContainsTest" />
+        </classes>
+    </test>
+
 </suite>
