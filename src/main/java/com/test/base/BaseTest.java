@@ -162,11 +162,11 @@ public class BaseTest implements ITest {
 
 
     protected void setupChromeRemoteDriver(String hubUrl, String platformName) throws IOException {
-        Platform platform = (platformName != null) ? Platform.valueOf(platformName) : Platform.ANY;
+        //Platform platform = (platformName != null) ? Platform.valueOf(platformName) : Platform.ANY;
 
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setBrowserName("chrome");
-        capabilities.setPlatform(platform);
+        //capabilities.setPlatform(platform);
         //capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
 
         driver = new CustomRemoteWebDriver(new URL(hubUrl), capabilities);
