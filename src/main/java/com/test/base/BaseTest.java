@@ -92,7 +92,7 @@ public class BaseTest implements ITest {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setBrowserName("firefox");
         capabilities.setPlatform(platform);
-        capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+        //capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
 
         driver = new CustomRemoteWebDriver(new URL(hubUrl), capabilities);
         driver.manage().window().maximize();
@@ -167,7 +167,7 @@ public class BaseTest implements ITest {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setBrowserName("chrome");
         capabilities.setPlatform(platform);
-        capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+        //capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
 
         driver = new CustomRemoteWebDriver(new URL(hubUrl), capabilities);
         driver.manage().window().maximize();
@@ -188,7 +188,7 @@ public class BaseTest implements ITest {
         Reporter.log("\n" + message);
         System.out.println(message);
 
-        String hubUrl = System.getProperty("hub");
+        String hubUrl = "http://localhost:4444/wd/hub"; //System.getProperty("hub");
         String platform = System.getProperty("sun.desktop"); //or  os.name
 
         if (browser.equalsIgnoreCase("chrome")) {

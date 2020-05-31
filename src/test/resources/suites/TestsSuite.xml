@@ -5,18 +5,18 @@
 <!-- <parameter name="environment" value="local"></parameter> -->
 <parameter name="environment" value="grid"></parameter>
 
-<test name="BookContains-CH">
-    <parameter name="browser" value="chrome"></parameter>
-    <classes>
-        <class name="net.test.BookContainsTest" />
-    </classes>
-</test>
+    <test name="BookContains-FF">
+        <parameter name="browser" value="firefox"></parameter>
+        <classes>
+            <class name="net.test.BookContainsTest" />
+        </classes>
+    </test>
 
-<test name="BookContains-FF">
-    <parameter name="browser" value="firefox"></parameter>
-    <classes>
-        <class name="net.test.BookContainsTest" />
-    </classes>
-</test>
+    <test name="BookContains-CH">
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="net.test.BookContainsTest" />
+        </classes>
+    </test>
 
 </suite>
