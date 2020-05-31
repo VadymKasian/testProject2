@@ -167,9 +167,30 @@ public class BaseTest implements ITest {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setBrowserName("chrome");
         //capabilities.setPlatform(platform);
-        //capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+        capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, false);
 
-        driver = new CustomRemoteWebDriver(new URL(hubUrl), capabilities);
+        driver = new CustomRemoteWebDriver(new URL(hubUrl), capabilities) {
+            @Override
+            public WebElement findElement(By by) {
+                try {
+                    return by.findElement(this);
+                } catch (NoSuchElementException nse) {
+                    Field f = null;
+                    try {
+                        f = Throwable.class.getDeclaredField("detailMessage");
+                    } catch (NoSuchFieldException e) {
+                        throw nse;
+                    }
+                    f.setAccessible(true);
+                    try {
+                        String error = "\n" + by.toString() + "\n" + f.get(nse);
+                        f.set(nse, error);
+                    } catch (IllegalAccessException ia) {
+                    }
+                    throw nse;
+                }
+            }
+        };
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Constants.ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     }
@@ -189,7 +210,7 @@ public class BaseTest implements ITest {
         System.out.println(message);
 
         String hubUrl = "http://localhost:4444/wd/hub"; //System.getProperty("hub");
-        String platform = System.getProperty("sun.desktop"); //or  os.name
+        String platform = System.getProperty("os.name"); //or  os.name
 
         if (browser.equalsIgnoreCase("chrome")) {
             if (hubUrl != null && !hubUrl.isEmpty()) {
