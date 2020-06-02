@@ -97,12 +97,12 @@ public class BaseTest implements ITest {
 
         System.setProperty("webdriver.opera.driver", pathToDriver);
         DesiredCapabilities capabilities = DesiredCapabilities.opera();
-        driver = new OperaDriver(capabilities);
 
         capabilities.setBrowserName("opera");
         capabilities.setPlatform(Platform.WINDOWS);
-        capabilities.setVersion("81.0.4044.113");
+        capabilities.setVersion("68.0.3618.125");
 
+        driver = new OperaDriver(capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Constants.ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         driver.get(Constants.MAIN_PAGE_URL);
