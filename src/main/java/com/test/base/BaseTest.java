@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -88,24 +89,20 @@ public class BaseTest implements ITest {
         driver.get(Constants.MAIN_PAGE_URL);
     }
 
-    protected void setupFirefoxRemoteDriver(String hubUrl, String platformName) throws IOException {
+    protected void setupOperaRemoteDriver(String hubUrl, String platformName) throws IOException {
 
         String platform = System.getProperty("os.name");
 
-        String driversFolder = Constants.DEFAULT_LIB_DIR + File.separator;
-        String pathToDriver = "D:\\java\\programs\\geckodriver.exe";
+        String pathToDriver = "D:/java/programs/operadriver.exe";
 
-        System.setProperty("webdriver.gecko.driver", pathToDriver);
-        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-        driver = new FirefoxDriver(capabilities);
+        System.setProperty("webdriver.opera.driver", pathToDriver);
+        DesiredCapabilities capabilities = DesiredCapabilities.opera();
+        driver = new OperaDriver(capabilities);
 
-        capabilities.setBrowserName("firefox");
+        capabilities.setBrowserName("opera");
         capabilities.setPlatform(Platform.WINDOWS);
-        capabilities.setVersion("60.0");
-        capabilities.setCapability(FirefoxDriver.BINARY, "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
-        capabilities.setCapability("marionette", true);
+        capabilities.setVersion("81.0.4044.113");
 
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Constants.ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         driver.get(Constants.MAIN_PAGE_URL);
@@ -229,7 +226,7 @@ public class BaseTest implements ITest {
 
     @BeforeClass(alwaysRun = true)
     @Parameters({ "browser"})
-    public void startBrowser(@Optional("chrome") String browser) throws IOException {
+    public void startBrowser(String browser) throws IOException {
 
         String message = "* Starting test " + this.getClass().toString();
         Reporter.log("\n" + message);
@@ -245,9 +242,9 @@ public class BaseTest implements ITest {
                 this.startChrome();
             }
 
-        } else if (browser.equalsIgnoreCase("firefox")) {
+        } else if (browser.equalsIgnoreCase("opera")) {
             if (hubUrl != null && !hubUrl.isEmpty()) {
-                this.setupFirefoxRemoteDriver(hubUrl, platform);
+                this.setupOperaRemoteDriver(hubUrl, platform);
             } else {
                 this.startFirefox();
             }

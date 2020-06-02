@@ -12,8 +12,8 @@
         </classes>
     </test>
 
-    <test name="BookContains-FF">
-        <parameter name="browser" value="firefox"></parameter>
+    <test name="BookContains-OP">
+        <parameter name="browser" value="opera"></parameter>
         <classes>
             <class name="net.test.BookContainsTest" />
         </classes>
